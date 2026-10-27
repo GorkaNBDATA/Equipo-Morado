@@ -1,4 +1,4 @@
-import uuid         # para que sirve
+import uuid         
 
 import requests
 from flask import Flask, abort, jsonify, request
@@ -47,7 +47,7 @@ def buscar_prestamo(id: str) -> Prestamo:
     return prestamo
 
 
-# ---------- Endpoints (recurso: prestamos) ----------
+#  Endpoints (recurso: prestamos) 
 
 @app.get("/api/v1/prestamos")
 def listar_prestamos():
@@ -115,7 +115,7 @@ def eliminar_prestamo(id):
     return "", 204
 
 
-# ---------- Integración con una API externa ----------
+# Integrar con una API externa 
 
 @app.get("/api/v1/prestamos/<id>/conversion")
 def convertir_monto(id):
@@ -143,7 +143,7 @@ def convertir_monto(id):
     })
 
 
-# ---------- Errores: siempre el mismo formato JSON ----------
+# que los errores: siempre estén en formato JSON
 
 @app.errorhandler(HTTPException)
 def manejar_error(error):
