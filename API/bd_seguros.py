@@ -3,7 +3,7 @@ import pandas as pd
 
 from app_seguros import app, db
 
-df = pd.read_csv("data/df_limpio.csv")
+df = pd.read_csv("../data/df_limpio.csv")
 
 with app.app_context():
     db.drop_all()

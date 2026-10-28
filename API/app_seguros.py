@@ -87,8 +87,12 @@ def inicio():
 def crear_prestamo():
     """Crea un préstamo nuevo a partir de un JSON. Obligatorios: Monto_Inicial y Duracion."""
     datos = request.get_json(silent=True)
-    if not datos or "Monto_Inicial" not in datos or "Duracion" not in datos:
-        abort(400, description="Faltan campos obligatorios: Monto_Inicial y Duracion")
+
+    if not isinstance(datos, dict):
+        abort(400, description="Debes enviar un objeto JSON")
+
+    if datos.get("Monto_Inicial") is None or datos.get("Duracion") is None:
+        abort(400, description="Faltan los campos obligatorios: Monto_Inicial y Duracion")
 
     # Nos quedamos solo con columnas que existan 
     columnas = Prestamo.__table__.columns.keys()
@@ -105,6 +109,24 @@ def crear_prestamo():
     db.session.commit()
     return jsonify(a_diccionario(prestamo)), 201
 
+@app.patch("/api/v1/prestamos/<id>")
+def actualizar_prestamo(id):
+    """Actualiza los datos de un préstamo."""
+    prestamo = buscar_prestamo(id)
+    datos = request.get_json(silent=True)
+
+    if not isinstance(datos, dict) or not datos:
+        abort(400, description="Debes enviar un JSON con datos")
+
+    columnas = Prestamo.__table__.columns.keys()
+
+    for campo, valor in datos.items():
+        if campo in columnas and campo != "ID":
+            setattr(prestamo, campo, valor)
+
+    db.session.commit()
+
+    return jsonify(a_diccionario(prestamo))
 
 @app.delete("/api/v1/prestamos/<id>")
 def eliminar_prestamo(id):
