@@ -1,3 +1,10 @@
+"""
+app_seguros.py
+API REST de préstamos con Flask.
+Dataset de entrada: instance/prestamos.db (se crea con bd_seguros.py a partir de data/df_api.csv)
+
+Arrancar: python app_seguros.py
+"""
 import uuid         
 
 import requests
@@ -32,6 +39,9 @@ class Prestamo(db.Model):
     Fiador = db.Column(db.Float)
     Impago = db.Column(db.Integer)
     Prima = db.Column(db.Float)
+    prob_impago = db.Column(db.Float)
+    prediccion = db.Column(db.Integer)
+    predicciones_Prima = db.Column(db.Float)
 
 
 def a_diccionario(prestamo: Prestamo) -> dict:

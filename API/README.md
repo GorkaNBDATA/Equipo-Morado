@@ -7,6 +7,8 @@ Esta API REST está desarrollada con Python y Flask. Permite consultar, crear, a
 
 Además, integra la API externa Frankfurter para convertir el importe inicial de un préstamo de euros a otra moneda.
 
+Los datos proceden de df_limpio.csv y df_prediccion_prima.csv, unidos en un único archivo (df_api.csv) que incluye las predicciones del modelo: prob_impago, prediccion y predicciones_Prima.
+
 2. Tecnologías utilizadas
 Python
 Flask
@@ -15,12 +17,19 @@ SQLite
 Pandas
 Requests
 API externa Frankfurter
+
 3. Instalación y ejecución
 
 Instalar las dependencias:
 
 bash
 pip install flask flask-sqlalchemy pandas requests
+
+
+Preparar los datos (une df_limpio.csv y df_prediccion_prima.csv en data/df_api.csv):
+
+bash
+python preparar_datos.py
 
 
 Crear la base de datos y cargar los datos del CSV:
@@ -46,6 +55,7 @@ POST	/api/v1/prestamos	Crea un préstamo nuevo.
 PATCH	/api/v1/prestamos/<id>	Actualiza los datos de un préstamo.
 DELETE	/api/v1/prestamos/<id>	Elimina un préstamo.
 GET	/api/v1/prestamos/<id>/conversion?moneda=USD	Convierte el importe del préstamo a otra moneda.
+
 5. Filtros de consulta
 
 El endpoint de listado permite aplicar filtros opcionales:
@@ -56,7 +66,7 @@ limit: limita el número de resultados.
 
 Ejemplo:
 
-GET /api/v1/prestamos?impago=0&estudios=Universitarios&limit=10
+GET /api/v1/prestamos?impago=0&estudios=Doctorado&limit=10
 
 6. Ejemplo de creación de un préstamo
 
@@ -111,5 +121,6 @@ Los principales códigos utilizados son:
 201 Created: préstamo creado.
 204 No Content: préstamo eliminado.
 400 Bad Request: petición incorrecta.
-404 Not Found: préstamo inexistente.
+404 Not Found: préstamo o ruta inexistente.
+405 Method Not Allowed: método HTTP no permitido en ese endpoint.
 502 Bad Gateway: error al consultar la API externa.
