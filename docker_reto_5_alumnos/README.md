@@ -3,10 +3,23 @@ Este proyecto proporciona un entorno Docker con una base de datos MySQL preparad
 El cargador une ambos archivos por la columna ID y guarda los préstamos junto con las predicciones en la tabla prestamos. La base de datos utiliza almacenamiento persistente mediante un volumen Docker.
 
 ## Arranque
+
+Para construir las imágenes y arrancar los servicios:
+
 docker compose up --build
+
+Para arrancar en segundo plano:
+
+docker compose up -d
+
+Para comprobar el estado:
+
+docker compose ps
+
 Servicios disponibles:
+
 - API Flask: http://localhost:8000
-- MySQL: localhost:3306
+- MySQL: localhost:3307
 - Base de datos: creditos
 - Usuario: clase
 - Contraseña: clase123
@@ -48,30 +61,13 @@ la base de datos se volverá a generar a partir de los dos CSV en el siguiente a
 La API permite consultar y gestionar préstamos, así como obtener información relacionada con las predicciones.
 
 | Método | Endpoint | Descripción |
-||---|---|
-| GET | `/api/v1/prestamos` | Obtener todos los préstamos |
+|---|---|---|
+| GET | `/api/v1/prestamos` | Obtener préstamos |
 | GET | `/api/v1/prestamos/<id>` | Consultar un préstamo por ID |
 | POST | `/api/v1/prestamos` | Crear un préstamo |
 | PATCH | `/api/v1/prestamos/<id>` | Actualizar un préstamo |
 | DELETE | `/api/v1/prestamos/<id>` | Eliminar un préstamo |
 | GET | `/api/v1/prestamos/<id>/conversion` | Convertir el importe a otra moneda |
-
-## Códigos HTTP
-
-La API utiliza códigos HTTP para indicar el resultado de las peticiones:
-
-- `200`: petición realizada correctamente.
-- `201`: recurso creado correctamente.
-- `204`: recurso eliminado correctamente.
-- `400`: petición incorrecta.
-- `404`: préstamo no encontrado.
-- `502`: error al consultar la API externa.
-
-## Integración con Power BI
-
-La API proporciona datos en formato JSON que pueden utilizarse como fuente de información para Power BI.
-
-Se mantiene la versión `/api/v1/` para conservar la compatibilidad con los consumidores existentes.
 
 ## Ejemplos de uso
 
@@ -103,12 +99,6 @@ GET /api/v1/prestamos?estudios=Universidad
 
 ```http
 GET /api/v1/prestamos?limit=10
-```
-
-### Consultar estadísticas de impagos
-
-```http
-GET /api/v1/prestamos/estadisticas
 ```
 
 ### Convertir un importe a dólares
