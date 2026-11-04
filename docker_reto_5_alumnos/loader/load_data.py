@@ -5,9 +5,10 @@ from pathlib import Path
 import pandas as pd
 from sqlalchemy import create_engine
 
-DATABASE_URL = "mysql+pymysql://clase:clase123@db:3306/creditos"
+DATABASE_URL = "mysql+pymysql://clase:clase123@localhost:3306/creditos"
+from pathlib import Path
 
-DATA_DIR = Path("/datos")
+DATA_DIR = Path("../datos")
 LIMPIO_FILE = DATA_DIR / "df_limpio.csv"
 PREDICCIONES_FILE = DATA_DIR / "df_prediccion_prima.csv"
 
