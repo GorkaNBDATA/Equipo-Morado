@@ -24,7 +24,7 @@ services:
       DATA_FILE: /datos/datos.xlsx
       FORCE_RELOAD: "false"
     volumes:
-      - ./datos:/datos:ro
+      - ./datos:/app/datos:ro
     depends_on:
       db:
         condition: service_healthy
