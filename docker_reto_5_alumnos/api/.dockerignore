@@ -1,3 +1,7 @@
 __pycache__
 *.pyc
 .venv
+datos/df_prediccion_prima.csv
+datos/df_limpio.csv
+datos/df_api.csv
+datos/datos.xlsx
